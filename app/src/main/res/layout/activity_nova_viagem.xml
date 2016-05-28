@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".NovaViagemActivity">
+
+    <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:stretchColumns="0,1,2">
+
+        <LinearLayout
+            android:background="#015488"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/textViewNovaViagem"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textStyle="bold"/>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/textViewDestino"/>
+
+        <EditText
+            android:id="@+id/editTextDestino"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/textViewTipoDaViagem"/>
+
+        <RadioGroup
+            android:id="@+id/radioGroupTipoViagem"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/radioButtonLazer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="@string/radioButtonLazer"/>
+
+            <RadioButton
+                android:id="@+id/radioButtonNegocios"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/radioButtonNegocios"/>
+        </RadioGroup>
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/textViewDataDaChegada"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/textViewDataDaSaida"/>
+        </TableRow>
+        <TableRow>
+            <Button
+                android:id="@+id/buttonDataChegada"
+                android:onClick="selecionarData"
+                android:text="@string/selecione"/>
+
+            <Button
+                android:id="@+id/buttonDataSaida"
+                android:onClick="selecionarData"
+                android:text="@string/selecione"/>
+        </TableRow>
+
+        <TextView android:text="@string/orcamento"/>
+
+        <EditText
+            android:id="@+id/editTextOrcamento"
+            android:inputType="numberDecimal"/>
+
+        <TableRow>
+            <TextView
+                android:layout_width="wrap_content"
+                android:text="@string/textViewQuantidadeDePessoas"/>
+
+            <EditText
+                android:id="@+id/editTextQuantidadePessoas"
+                android:inputType="number"/>
+        </TableRow>
+
+        <Button
+            android:onClick="salvarViagem"
+            android:text="@string/buttonSalvar"/>
+
+    </TableLayout>
+
+</ScrollView>

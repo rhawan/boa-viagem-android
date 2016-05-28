@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.android.rhawan.boaviagem.DashboardActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#015488">
+
+        <TextView
+            android:id="@+id/textViewNovoGasto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="80dp"
+            android:clickable="true"
+            android:drawableTop="@drawable/novo_gasto"
+            android:onClick="selecionarOpcao"
+            android:text="@string/textViewNovoGasto"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/textViewNovaViagem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="50dp"
+            android:layout_alignTop="@id/textViewNovoGasto"
+            android:clickable="true"
+            android:drawableTop="@drawable/nova_viagem"
+            android:onClick="selecionarOpcao"
+            android:text="@string/textViewNovaViagem"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/textViewMinhasViagens"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignLeft="@id/textViewNovoGasto"
+            android:layout_marginLeft="-10dp"
+            android:layout_marginBottom="120dp"
+            android:drawableTop="@drawable/minhas_viagens"
+            android:clickable="true"
+            android:onClick="selecionarOpcao"
+            android:text="@string/textViewMinhasViagens"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/textViewConfiguracoes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/textViewMinhasViagens"
+            android:layout_alignRight="@id/textViewNovaViagem"
+            android:drawableTop="@drawable/configuracoes"
+            android:clickable="true"
+            android:onClick="selecionarOpcao"
+            android:text="@string/textViewConfiguracoes"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold"/>
+
+
+    </RelativeLayout>
+
+</LinearLayout>

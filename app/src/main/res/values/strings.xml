@@ -1,0 +1,43 @@
+<resources>
+    <string name="app_name">BoaViagem</string>
+
+    <!-- Activity Main -->
+    <string name="textViewUsuario">Usuário:</string>
+    <string name="textViewSenha">Senha:</string>
+    <string name="buttonLogin">Login</string>
+    <string name="erro_autenticacao">Usuário ou senha inválidos!</string>
+
+    <!-- Activity Dashboard -->
+    <string name="textViewNovoGasto">Novo Gasto</string>
+    <string name="textViewNovaViagem">Nova Viagem</string>
+    <string name="textViewMinhasViagens">Minhas Viagens</string>
+    <string name="textViewConfiguracoes">Configurações</string>
+
+    <!-- Activity NovaViagem -->
+    <string name="textViewDestino">Destino</string>
+    <string name="textViewTipoDaViagem">Tipo da Viagem</string>
+    <string name="radioButtonLazer">Lazer</string>
+    <string name="radioButtonNegocios">Negócios</string>
+    <string name="textViewDataDaChegada">Data da Chegada</string>
+    <string name="textViewDataDaSaida">Data da Saída</string>
+    <string name="selecione">Selecione</string>
+    <string name="orcamento">Orçamento</string>
+    <string name="textViewQuantidadeDePessoas">Quantidade de Pessoas</string>
+    <string name="buttonSalvar">Salvar</string>
+
+    <!-- Activity NovoGasto -->
+    <string name="textViewValor">Valor</string>
+    <string name="textViewData">Data</string>
+    <string name="textViewDescricao">Descrição</string>
+    <string name="textViewLocal">Local</string>
+    <string name="categoria">Categoria</string>
+    <string name="buttonGastei">Gastei!</string>
+
+    <string-array name="categoria_gasto">
+        <item>Alimentação</item>
+        <item>Combustível</item>
+        <item>Transporte</item>
+        <item>Hospedagem</item>
+        <item>Outros</item>
+    </string-array>
+</resources>
