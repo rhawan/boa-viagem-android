@@ -1,17 +1,22 @@
 <resources>
     <string name="app_name">BoaViagem</string>
+    <string name="opcoes">Opções</string>
+    <string name="sim">Sim</string>
+    <string name="nao">Não</string>
 
     <!-- Activity Main -->
     <string name="textViewUsuario">Usuário:</string>
     <string name="textViewSenha">Senha:</string>
     <string name="buttonLogin">Login</string>
     <string name="erro_autenticacao">Usuário ou senha inválidos!</string>
+    <string name="manter_conectado">Manter conectado?</string>
 
     <!-- Activity Dashboard -->
     <string name="textViewNovoGasto">Novo Gasto</string>
     <string name="textViewNovaViagem">Nova Viagem</string>
     <string name="textViewMinhasViagens">Minhas Viagens</string>
     <string name="textViewConfiguracoes">Configurações</string>
+    <string name="menuSair">Sair</string>
 
     <!-- Activity NovaViagem -->
     <string name="textViewDestino">Destino</string>
@@ -32,6 +37,24 @@
     <string name="textViewLocal">Local</string>
     <string name="categoria">Categoria</string>
     <string name="buttonGastei">Gastei!</string>
+
+    <!-- Activity ViagemList -->
+    <string name="menuExcluirViagem">Excluir Viagem</string>
+    <string name="menuNovoGasto">Novo Gasto</string>
+    <string name="menuEditarViagem">Editar Viagem</string>
+    <string name="menuGastosRealizados">Gastos Realizados</string>
+    <string name="menuConfirmaExclusaoViagem">Deseja realmente remover a viagem?</string>
+
+    <!-- Activity GastoList -->
+    <string name="menuExcluirGasto">Excluir Gasto</string>
+
+    <!-- Activity Configuracoes -->
+    <string name="preferencias">Preferências</string>
+    <string name="modo_viagem">Modo Viagem</string>
+    <string name="modo_viagem_sumario">Determina a viagem ativa com base na data atual</string>
+    <string name="informe_valor_limite">Informe o valor limite (em %)</string>
+    <string name="valor_limite">Alerta de gastos</string>
+    <string name="valor_limite_sumario">Notifica quando os gastos ultrapassarem o percentual informado</string>
 
     <string-array name="categoria_gasto">
         <item>Alimentação</item>
