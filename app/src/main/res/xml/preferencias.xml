@@ -16,7 +16,6 @@
             android:summary="@string/valor_limite_sumario"
             android:title="@string/valor_limite" />
 
-
     </PreferenceCategory>
 
 </PreferenceScreen>

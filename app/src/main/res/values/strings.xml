@@ -29,6 +29,8 @@
     <string name="orcamento">Orçamento</string>
     <string name="textViewQuantidadeDePessoas">Quantidade de Pessoas</string>
     <string name="buttonSalvar">Salvar</string>
+    <string name="registro_salvo">Registro salvo com sucesso!</string>
+    <string name="erro_salvar">Erro ao salvar viagem</string>
 
     <!-- Activity NovoGasto -->
     <string name="textViewValor">Valor</string>

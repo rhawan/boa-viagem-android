@@ -4,7 +4,11 @@ import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.ContextMenu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -17,8 +21,13 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.rhawan.boaviagem.domain.Constantes;
+import com.android.rhawan.boaviagem.util.DatabaseHelper;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,9 +43,21 @@ public class ViagemListActivity extends ListActivity implements AdapterView.OnIt
 
     private int viagemSelecionada;
 
+    private Double valorLimite;
+
+    private DatabaseHelper databaseHelper;
+
+    private static SimpleDateFormat SDF = new SimpleDateFormat("dd/MM/yyyy");
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        this.databaseHelper = new DatabaseHelper(this);
+
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        String valor = preferences.getString("valor_limite", "-1");
+        this.valorLimite = Double.valueOf(valor);
 
         String[] de = {"imagem", "destino", "data", "gastoTotal", "barraProgresso"};
         int[] para = {R.id.imageViewTipoViagem, R.id.textViewDestino, R.id.textViewData,
@@ -48,6 +69,7 @@ public class ViagemListActivity extends ListActivity implements AdapterView.OnIt
         getListView().setOnItemClickListener(this);
         this.alertDialog = criarAlertDialog();
         this.dialogConfirmacao = criarDialogConfirmacao();
+
     }
 
     @Override
@@ -59,22 +81,25 @@ public class ViagemListActivity extends ListActivity implements AdapterView.OnIt
         this.viagemSelecionada = position;
         alertDialog.show();
         //startActivity(new Intent(this, GastoListActivity.class));
-
     }
 
     @Override
     public void onClick(DialogInterface dialog, int item) {
+        Intent intent;
+        String idViagem = (String) viagens.get(viagemSelecionada).get("id");
         switch (item) {
-            case 0:
-                startActivity(new Intent(this, NovaViagemActivity.class));
+            case 0: //Editar Viagem
+                intent = new Intent(this, NovaViagemActivity.class);
+                intent.putExtra(Constantes.VIAGEM_ID, idViagem);
+                startActivity(intent);
                 break;
-            case 1:
+            case 1: //Novo Gasto
                 startActivity(new Intent(this, NovoGastoActivity.class));
                 break;
-            case 2:
+            case 2: //Gastos Realizados
                 startActivity(new Intent(this, GastoListActivity.class));
                 break;
-            case 3:
+            case 3: //Excluir Viagem
                 dialogConfirmacao.show();
                 break;
             case DialogInterface.BUTTON_POSITIVE:
@@ -110,25 +135,65 @@ public class ViagemListActivity extends ListActivity implements AdapterView.OnIt
     }
 
     private List<Map<String, Object>> listarViagens() {
+        SQLiteDatabase db = databaseHelper.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT _id, tipo_viagem, destino, " +
+                "data_chegada, data_saida, orcamento FROM viagem", null);
+        cursor.moveToFirst();
+
         viagens = new ArrayList<Map<String, Object>>();
+        for(int i = 0; i < cursor.getCount(); i++) {
+            Map<String, Object> item = new HashMap<>();
 
-        Map<String, Object> item = new HashMap<>();
-        item.put("imagem", R.drawable.viagem_negocios);
-        item.put("destino", "São Paulo");
-        item.put("data", "02/02/2012 a 04/02/2012");
-        item.put("gastoTotal", "Gasto total R$ 314,98");
-        item.put("barraProgresso", new Double[]{500.0, 450.0, 314.98});
-        viagens.add(item);
+            String id = cursor.getString(0);
+            int tipoViagem = cursor.getInt(1);
+            String destino = cursor.getString(2);
+            long dataChegada = cursor.getLong(3);
+            long dataSaida = cursor.getLong(4);
+            double orcamento = cursor.getDouble(5);
 
-        item = new HashMap<>();
-        item.put("imagem", R.drawable.viagem_lazer);
-        item.put("destino", "Maceió");
-        item.put("data", "14/05/2012 a 22/05/2012");
-        item.put("gastoTotal", "Gasto total R$ 25834,67");
-        item.put("barraProgresso", new Double[]{30000.00, 450.0, 25834.67});
-        viagens.add(item);
+            item.put("id", id);
+            if(tipoViagem == Constantes.VIAGEM_LAZER) {
+                item.put("imagem", R.drawable.viagem_lazer);
+            } else {
+                item.put("imagem", R.drawable.viagem_negocios);
+            }
+            item.put("destino", destino);
+
+            Date dataChegadaDate = new Date(dataChegada);
+            Date dataSaidaDate = new Date(dataSaida);
+            String periodo = String.format("%s a %s",
+                    SDF.format(dataChegadaDate), SDF.format(dataSaidaDate));
+            item.put("data", periodo);
+
+            double totalGasto = 0;
+            item.put("total", "Gasto total R$ " + totalGasto);
+
+            double alerta = orcamento * valorLimite / 100;
+            Double[] valores = new Double[] {orcamento, alerta, totalGasto};
+            item.put("barraProgresso", valores);
+
+            viagens.add(item);
+            cursor.moveToNext();
+        }
+        cursor.close();
 
         return viagens;
+    }
+
+    private double calcularTotalGasto(SQLiteDatabase db, String id) {
+        Cursor cursor = db.rawQuery("SELECT SUM(valor) FROM gasto" +
+                " WHERE viagem_id = ?", new String[]{id});
+        cursor.moveToFirst();
+        double total = cursor.getDouble(0);
+        cursor.close();
+        return total;
+    }
+
+    private void excluirViagem(String id) {
+        SQLiteDatabase db = databaseHelper.getWritableDatabase();
+        String where[] = new String[]{ id };
+        db.delete("gasto", "viagem_id = ?", where);
+        db.delete("viagem", "_id = ?", where);
     }
 
     private class ViagemViewBinder implements SimpleAdapter.ViewBinder {
