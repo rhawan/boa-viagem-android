@@ -26,7 +26,9 @@ public class DashboardActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        finish();
+        if(R.id.menuSair == item.getItemId()) {
+            finish();
+        }
         return true;
     }
 

@@ -13,21 +13,34 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.rhawan.boaviagem.dao.GastoDAO;
+import com.android.rhawan.boaviagem.domain.Constantes;
+import com.android.rhawan.boaviagem.domain.Gasto;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class GastoListActivity extends ListActivity implements AdapterView.OnItemClickListener {
 
     private List<Map<String, Object>> gastos;
-
     private String dataAnterior = "";
+    private Long idViagem;
+
+    private GastoDAO gastoDAO;
+
+    private static final SimpleDateFormat SDF = new SimpleDateFormat("dd/MM/yyy");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        this.gastoDAO = new GastoDAO(this);
+        this.idViagem = getIntent().getLongExtra(Constantes.VIAGEM_ID, -1);
 
         String[] de = {"data", "descricao", "valor", "categoria"};
         int[] para = {R.id.textViewDataGastoList, R.id.textViewDescricao, R.id.textViewValor,
@@ -59,10 +72,10 @@ public class GastoListActivity extends ListActivity implements AdapterView.OnIte
     public boolean onContextItemSelected(MenuItem item) {
         if(item.getItemId() == R.id.menuExcluirGasto) {
             AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+
             gastos.remove(info.position);
             getListView().invalidateViews();
             dataAnterior = "";
-            //TODO remover do banco de dados
             return true;
         }
         return super.onContextItemSelected(item);
@@ -70,35 +83,16 @@ public class GastoListActivity extends ListActivity implements AdapterView.OnIte
 
     private List<Map<String, Object>> listarGastos() {
         gastos = new ArrayList<>();
-
-        Map<String, Object> item = new HashMap<String, Object>();
-        item.put("data", "04/02/2012");
-        item.put("descricao", "Diária Hotel");
-        item.put("valor", "R$ 260,00");
-        item.put("categoria", R.color.categoria_hospedagem);
-        gastos.add(item);
-
-        item = new HashMap<>();
-        item.put("data", "03/02/2012");
-        item.put("descricao", "Wifi");
-        item.put("valor", "R$ 7,00");
-        item.put("categoria", R.color.categoria_outros);
-        gastos.add(item);
-
-        item = new HashMap<>();
-        item.put("data", "02/02/2012");
-        item.put("descricao", "Táxi Aeroporto - Hotel");
-        item.put("valor", "R$ 34,00");
-        item.put("categoria", R.color.categoria_transporte);
-        gastos.add(item);
-
-        item = new HashMap<>();
-        item.put("data", "02/02/2012");
-        item.put("descricao", "Sanduíche");
-        item.put("valor", "R$ 19,90");
-        item.put("categoria", R.color.categoria_alimentacao);
-        gastos.add(item);
-
+        List<Gasto> gastosBD = gastoDAO.listarGastos(idViagem);
+        for (Gasto gasto : gastosBD) {
+            Map<String, Object> item = new HashMap<>();
+            item.put("data", SDF.format(gasto.getData()));
+            item.put("descricao", gasto.getDescricao());
+            item.put("valor", gasto.getValor());
+            item.put("categoria", R.color.categoria_alimentacao);
+            //item.put("categoria", gasto.getCategoria());
+            gastos.add(item);
+        }
         return gastos;
     }
 

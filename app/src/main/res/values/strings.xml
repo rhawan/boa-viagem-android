@@ -3,6 +3,7 @@
     <string name="opcoes">Opções</string>
     <string name="sim">Sim</string>
     <string name="nao">Não</string>
+    <string name="error_campo_obrigatorio">Campo obrigatório!</string>
 
     <!-- Activity Main -->
     <string name="textViewUsuario">Usuário:</string>
@@ -65,4 +66,10 @@
         <item>Hospedagem</item>
         <item>Outros</item>
     </string-array>
+    <string name="title_activity_main2">Main2Activity</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
 </resources>
